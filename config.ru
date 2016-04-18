@@ -10,7 +10,7 @@ Dir[File.join(File.dirname(__FILE__), "lib", "API_NAME_HERE", "**", "*.rb")].eac
 end
 
 # Run application
-run TestApi::Main.new
+run RestApiTemplate::Main.new
 
 # Settings routes
-map("/") { run TestApi::Controllers::HealthCheckController.new }
+map("/") { run RestApiTemplate::Controllers::HealthCheckController.new }

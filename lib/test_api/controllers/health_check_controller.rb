@@ -1,16 +1,16 @@
 require_relative "../main.rb"
 require_relative "../version.rb"
 
-module TestApi
+module RestApiTemplate
   module Controllers
-    class HealthCheckController < TestApi::Main
+    class HealthCheckController < RestApiTemplate::Main
       get '/' do
       end
 
       get '/status' do
         status = Hash.new
         status["api_name"] = "Test Api"
-        status["version"] = TestApi::VERSION
+        status["version"] = RestApiTemplate::VERSION
         status["environment"] = ENV["RACK_ENV"]
 
         json status

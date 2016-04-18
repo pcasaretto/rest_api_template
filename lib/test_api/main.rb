@@ -6,7 +6,7 @@ require 'active_record'
 
 # require_relative 'middlewares/url_based_304.rb'
 
-module TestApi
+module RestApiTemplate
   class Main < RestApiBase::Controllers::RestApiBaseController
     if development?
       require "sinatra/reloader"
