@@ -1,4 +1,4 @@
-# Instruções para subir o Test Api Dockerizado no Linux
+# Instruções para subir a Api Dockerizada no Linux
 
 O processo a seguir descreve os passos a serem seguidos para ter a aplicação RDStation rodando e respondendo em http://localhost com os seguintes serviços rodando isoladamente em containers:
 * Postgresql
