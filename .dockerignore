@@ -1,0 +1,9 @@
+log
+packages
+build
+script
+spec
+.gitignore
+.git
+.rspec
+docker-compose.yml

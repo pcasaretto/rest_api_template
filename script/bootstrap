@@ -1,0 +1,6 @@
+#!/bin/sh
+# Make sure local dependencies are met.
+
+cd "$(dirname $0)"/..
+
+bundle check > /dev/null 2>&1 || bundle install

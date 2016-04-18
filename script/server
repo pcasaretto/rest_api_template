@@ -1,0 +1,10 @@
+#!/bin/sh
+# Start the development server.
+
+cd $(dirname "$0")/..
+: ${RAILS_ENV:=development}
+
+sleep 2
+
+# script/bootstrap && bundle exec foreman start -p $WEB_SERVER_PORT
+script/bootstrap && bundle exec unicorn -p $WEB_SERVER_PORT -c ./config/unicorn.rb

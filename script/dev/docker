@@ -1,0 +1,152 @@
+#!/bin/bash
+
+command=$1
+
+get_container_id(){
+  app=$1
+
+  if [[ "$app" == "" ]]; then
+    app="web"
+  fi
+
+  docker ps | grep $app | awk '{print $1}'
+}
+
+create_non_existing_volume(){
+  volume_id=$(docker volume ls -q | grep $1)
+
+  if [[ "$volume_id" == "" ]]; then
+    echo "Creating volume for $1"
+    docker volume create --name $1
+  fi
+}
+
+create_volumes(){
+  echo "CREATE_VOLUMES_HERE!"
+}
+
+compose_down() {
+  docker-compose stop
+  docker-compose down
+  clear_containers
+}
+
+compose_up() {
+  docker-compose up
+}
+
+compose_run() {
+  docker-compose run --service-ports web
+}
+
+exec_container() {
+  container_id=$(get_container_id $1) || {
+    echo "Error while trying to get container id"
+    exit 1
+  }
+
+  cmd=$2
+
+  if [[ "$cmd" == "" ]]; then
+    cmd="bash"
+  fi
+
+  docker exec -it $container_id $cmd
+}
+
+docker_ip(){
+  unamestr=`uname`
+  if [[ "$unamestr" == 'Linux' ]]; then
+    ip=0.0.0.0
+  elif [[ "$unamestr" == 'Darwin' ]]; then
+    eval $(docker-machine env dev)
+    ip=`sed -e 's/^tcp:\/\/\(.*\):.*$/\1/' <<< "$DOCKER_HOST"`
+  fi
+}
+
+clear_containers(){
+  echo "Removing possibly existing containers"
+  docker rm -f $(docker ps -aq)
+}
+
+clear_volumes(){
+  echo "Removing possibly existing volumes"
+  docker volume rm $(docker volume ls -q)
+}
+
+docker_reset(){
+  clear_containers
+  clear_volumes
+}
+
+docker_volumes(){
+  docker volume ls -q
+}
+
+docker_containers(){
+  docker ps -q
+}
+
+docker_install(){
+  echo "Setting up workstation Ubuntu 14.04+"
+  curl -fsS https://raw.githubusercontent.com/danieloliveira079/docker-install/master/install-offical | bash
+  sudo usermod -aG docker $USER
+}
+
+case "$command" in
+  install)
+    docker_install
+    exit 0
+    ;;
+  reset)
+    docker_reset
+    exit 0
+    ;;
+  volumes)
+    docker_volumes
+    exit 0
+    ;;
+  ps)
+    docker_containers
+    exit 0
+    ;;
+  env)
+    echo "$(docker-machine env dev)"
+    exit 0
+    ;;
+  ip)
+    docker_ip
+    echo "Your docker host ip: ${ip}"
+    exit 0
+    ;;
+  up)
+    compose_down
+    create_volumes
+    echo "Starting docker containers..."
+    compose_up
+    exit 0
+    ;;
+  start)
+    compose_down
+    create_volumes
+    echo "Starting up container Web and opening a TTY Session"
+    compose_run
+    exit 0
+    ;;
+  stop)
+    echo "Stopping web container..."
+    compose_down
+    echo "Stopping web container...Done"
+    exit 0
+    ;;
+  console)
+    echo "Starting up TTY Session"
+    exec_container $2
+    exit 0
+    ;;
+  exec)
+    echo "Executing '$3' on $2"
+    exec_container $2 $3
+    exit 0
+    ;;
+esac
