@@ -6,7 +6,7 @@ web:
   ports:
    - "80:9393"
   environment:
-    DATABASE_URL: 'postgres://vikings:8ATey2YhBHuLTjuu@segmentation-ops.cmd5nferbuoj.us-east-1.rds.amazonaws.com:5432/segmentation'
+    DATABASE_URL: 'postgres://some_user:some_pass@some_host:port/some_db'
     LOGGER_FILE: 'log/API_NAME_HERE.log'
     WEB_SERVER_PORT: '9393'
     RACK_ENV: development
