@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/hugo1987br/rest_api_base.git
+  remote: https://github.com/hugoluchessi/rest_api_base.git
   revision: 0fe03fe809aa70d79585f0b5a79a145dcc4ec533
   specs:
     rest_api_base (0.0.1)
