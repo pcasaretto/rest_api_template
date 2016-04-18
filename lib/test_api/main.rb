@@ -33,15 +33,22 @@ module RestApiTemplate
 
       set :logger => logger
 
-      # Set persistence layer
-      ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
-      ActiveRecord::Base.logger = logger
+      # Set the database connections if needed
+      # ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+      # ActiveRecord::Base.logger = logger
 
       # Adding Middlewares
-      use RestApiBase::Middlewares::UrlBased304, :cache_expiration_seconds => ENV['HTTP_CACHE_EXPIRATION']
+      # Use this middleware for request caching based on url, mainly useful for static content
+      # use RestApiBase::Middlewares::UrlBased304, :cache_expiration_seconds => ENV['HTTP_CACHE_EXPIRATION']
+
+      # Logger middleware for detailed logging
       use RestApiBase::Middlewares::RequestLogger, :logger => logger
-      use RestApiBase::Middlewares::SupportedMediaTypes
-      use RestApiBase::Middlewares::AllowCrossDomain
+
+      # Add this middleware to prevent unsuported payloads
+      # use RestApiBase::Middlewares::SupportedMediaTypes
+
+      # Use this middleware to allow cross domain call on this api
+      # use RestApiBase::Middlewares::AllowCrossDomain
     end
   end
 end
