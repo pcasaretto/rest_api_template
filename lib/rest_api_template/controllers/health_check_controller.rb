@@ -9,7 +9,7 @@ module RestApiTemplate
 
       get '/status' do
         status = Hash.new
-        status["api_name"] = "Test Api"
+        status["api_name"] = "RestApiTemplate"
         status["version"] = RestApiTemplate::VERSION
         status["environment"] = ENV["RACK_ENV"]
 
