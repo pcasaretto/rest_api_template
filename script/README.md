@@ -5,7 +5,7 @@ O processo a seguir descreve os passos a serem seguidos para ter a aplicação R
 * Web Server
 
 ### Executar o seguinte comando para subir todos os serviços:
-* ```$ ./script/dev/docker start```
+* ```$ ./script/docker start```
 
 Ao término das inicializações abra seu navegador e aponte para o endereço http://localhost. Se tudo correu bem você o status do request será 200.
 
