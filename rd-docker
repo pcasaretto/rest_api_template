@@ -6,7 +6,7 @@ get_container_id(){
   app=$1
 
   if [[ "$app" == "" ]]; then
-    app="web"
+    app="api"
   fi
 
   docker ps | grep $app | awk '{print $1}'
@@ -22,7 +22,7 @@ create_non_existing_volume(){
 }
 
 create_volumes(){
-  echo "CREATE_VOLUMES_HERE!"
+  create_non_existing_volume city-api-postgres
 }
 
 compose_down() {
@@ -36,7 +36,7 @@ compose_up() {
 }
 
 compose_run() {
-  docker-compose run --service-ports web
+  docker-compose run --service-ports api
 }
 
 exec_container() {
@@ -93,6 +93,41 @@ docker_install(){
   sudo usermod -aG docker $USER
 }
 
+build_image(){
+  app="{{API_NAME_HERE}}"
+  env=$1
+  tag=$2
+
+  if [[ "$env" == "" ]]; then
+    env="dev"
+  fi
+
+  if [[ "$tag" == "" ]]; then
+    env="latest"
+  fi
+
+  if [[ "$env" == "prod" ]]; then
+    cp ./.dockerignore.prod ./.dockerignore
+  else
+    cp ./.dockerignore.dev ./.dockerignore
+  fi
+
+  echo "Building '$env' image resultadosdigitais/$app:$tag"
+  docker build -t "resultadosdigitais/$app:$tag" -f docker-images/$env/Dockerfile .
+  rm ./.dockerignore
+}
+
+push_image(){
+  tag=$1
+
+  if [[ "$tag" == "" ]]; then
+    tag="latest"
+  fi
+
+  echo "Pushing image '$app:$tag' to registry"
+  docker push resultadosdigitais/$app:$tag
+}
+
 case "$command" in
   install)
     docker_install
@@ -129,14 +164,14 @@ case "$command" in
   start)
     compose_down
     create_volumes
-    echo "Starting up container Web and opening a TTY Session"
+    echo "Starting up application container and opening a TTY Session"
     compose_run
     exit 0
     ;;
   stop)
-    echo "Stopping web container..."
+    echo "Stopping application container..."
     compose_down
-    echo "Stopping web container...Done"
+    echo "Stopping application container...Done"
     exit 0
     ;;
   console)
@@ -147,6 +182,14 @@ case "$command" in
   exec)
     echo "Executing '$3' on $2"
     exec_container $2 $3
+    exit 0
+    ;;
+  build)
+    build_image $2 $3
+    exit 0
+    ;;
+  push)
+    push_image $2
     exit 0
     ;;
 esac
