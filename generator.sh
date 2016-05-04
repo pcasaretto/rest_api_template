@@ -22,5 +22,6 @@ git clone git@github.com:ResultadosDigitais/rest_api_template.git $DESTINATION_F
 cd $DESTINATION_FOLDER
 
 mv lib/rest_api_template lib/$API_NAME
+rm -Rf .git
 
 for f in $(find . -type f); do replace $f; done
