@@ -14,13 +14,13 @@ Change the file permissions
 
 Run the script informing the arguments in the correct order.
 
-`$ ./generator.sh arg1 arg2 arg3`
+`$ ./generator.sh arg1 arg2 [arg3]`
 
 They are respectively:
 
-- directory name where the project must be cloned into
 - api name to be used during project bootstrapping
 - module name to be used by Ruby files
+- directory name where the project must be cloned into
 
 # Environment variables
 
