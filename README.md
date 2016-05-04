@@ -1,72 +1,79 @@
 # RD REST API Template
-Initial Template for an Rest Api
+
+This is the basic template that must be used when creating new REST APIs that will be placed into a microservices. 
 
 ## Usage
-First of all, replace all "API_NAME_HERE" for the api's real name
-
-Seconds, replace "CREATE_VOLUMES_HERE" for a script to create possibly useful docker volumes (if needed)
 
 Replace the module RestApiTemplate for the api's main module.
 
 Change ENV configuration on docker-compose.yml if applicable.
 
-# Instruções para subir a Api Dockerizada no Linux
+# Running your API project using docker - Linux
 
-O processo a seguir descreve os passos a serem seguidos para ter a aplicação RDStation rodando e respondendo em http://localhost com os seguintes serviços rodando isoladamente em containers:
-* Postgresql
-* Web Server
+The following steps will guide all the way through the steps that will install docker and its dependencies and bootstrap the basic structure to get the project up and running usind docker containers.
 
-### Executar o seguinte comando para subir todos os serviços:
-* ```$ ./script/docker start```
+### Install Docker and Dependencies
 
-Ao término das inicializações abra seu navegador e aponte para o endereço http://localhost. Se tudo correu bem você o status do request será 200.
+If you already have installed docke engine and docker compose previously you can skip this part and go to the next step. If it is not the case please jut run the following command in a terminal window:
 
-### Comandos disponíveis no script "docker"
+`$ sudo ./rd-docker install`
 
-#### install
-Instala o docker e docker compose
+### Start API Services
 
-#### reset
-Remove todos os containers e volumes
+`$ ./script/docker start`
 
-#### volumes
-Lista os volumes existentes
+Process executed by this command:
+- Create the docker database volume for data persistence
+- Start Web server
+- Start Postgres Database service container
+- Link both services
 
-#### ps
-Lista os containers existentes
+If everything went ok you will see a message saying that your server is ready and listening for requests.
 
-#### ip
-Retorna o ip do host do docker
+From this point you can start making requests to the api endpoint.
 
-#### up
-Levanta infra do compose deixando os stdin sendo monitorados no console
+### Commands available in the rd-docker script
 
-#### start
-Levanta infra do compose deixando aberta uma sessão TTY no container "web"
+#### ./rd-docker reset
+Use carefully. This command will erase all docker volumes consequently you database data will be lost
 
-#### stop
-Derruba a infra do compose
+#### ./rd-docker volumes
+List all docker volumes
 
-#### console
-*Parametro: container_id (valor padrão: "web")*
+#### ./rd-docker ps
+List all running containers
 
-Abre uma sessão TTY no console do container passado como parametro
+#### ./rd-docker ip - OSX only
+Display the docker-machine current ip
 
+#### ./rd-docker up
+Start all services and keep logging in your terminal
 
-#### exec
-*Parametro1: container_id*
-*Parametro2: command*
+#### ./rd-docker start
+Start all services and open a TTY session in the API container service
 
-Executa o commando passado no container.
+#### ./rd-docker stop
+Stop all docker containers and services
 
-### Comandos úteis quando se trabalha com build de imagens e execução de containers
-* Remove todos os containers:
+#### ./rd-docker console [container_id]
+Connect to the specified container using a TTY session
+
+#### ./rd-docker exec [container_id] [command]
+Runs the specified command into the specified container
+
+#### ./rd-docker build [env] [tag]
+Builds the docker image based on the env argument and tags it using the tag argument.
+The available values for the env argument are: "dev" or "prod".
+
+#### ./rd-docker push
+Push the docker image to the docker hub repository. Only allowed people are able to perform this operation and that requires a docker hub login session available.
+
+### Other useful commands when using docker
+* Removes all docker containers from your machine:
     - ```sudo docker rm $(sudo docker ps -a -q)```
-* Remove todas as imagens da máquina local:
+* Removes all docker images from your machine:
     - ```sudo docker rmi $(sudo docker images -q)```
-* Para o docker daemon:
+* Stops the docker daemon:
     - ```sudo service docker stop```
-* Inicia o docker daemon:
+* Starts the docker daemon:
     - ```sudo service docker start```
-* Para todos os serviços levantados pelo comando ```$ sudo docker-compose up```
-    - ```sudo docker-compose down```
