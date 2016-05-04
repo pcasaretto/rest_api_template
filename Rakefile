@@ -21,16 +21,7 @@ task :create_db do
   ActiveRecord::Base.connection.create_database(db_name)
 end
 
-desc "drop your database"
-task :drop_db do
-  conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
-  db_name = conn.spec.config[:database];
-  conn.spec.config[:database] = 'postgres';
-
-  ActiveRecord::Base.connection.drop_database(db_name)
-end
-
-desc "reset your database"
+desc "reset {{API_NAME_HERE}} database"
 task :reset_db do
   conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
   db_name = conn.spec.config[:database];
