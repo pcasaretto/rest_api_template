@@ -1,10 +1,28 @@
 # RD REST API Template
 
-This is the basic template that must be used when creating new REST APIs that will be placed into a microservices. 
+This is the basic template that must be used when creating new REST APIs that will be placed into a microservices.
 
 ## Usage
 
-Replace the module RestApiTemplate for the api's main module.
+Dowload the generator.sh file and run it passing the proper arguments.
+
+`$ curl -O https://raw.githubusercontent.com/ResultadosDigitais/rest_api_template/circle-ci/generator.sh`
+
+Change the file permissions
+
+`$ chmod +x generator.sh`
+
+Run the script informing the arguments in the correct order.
+
+`$ ./generator.sh arg1 arg2 arg3`
+
+They are respectively:
+
+- directory name where the project must be cloned into
+- api name to be used during project bootstrapping
+- module name to be used by Ruby files
+
+# Environment variables
 
 Change ENV configuration on docker-compose.yml if applicable.
 
