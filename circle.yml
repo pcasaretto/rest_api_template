@@ -5,7 +5,7 @@ machine:
     version: 2.2.2
   environment:
       DATABASE_URL: 'postgres://ubuntu@127.0.0.1/circle_test'
-      LOGGER_FILE: 'log/{{API_NAME_HERE}.log'
+      LOGGER_FILE: 'log/{{API_NAME_HERE}}.log'
       WEB_SERVER_PORT: '{{API_SERVER_PORT}}'
       RACK_ENV: {{APP_ENVIRONMENT}}
       HTTP_CACHE_EXPIRATION: {{HTTP_CACHE_EXPIRATION}}

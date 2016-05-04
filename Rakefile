@@ -3,7 +3,7 @@ Bundler.require
 require 'active_record'
 
 require "pry-byebug"
-desc "drop city database"
+desc "drop {{API_NAME_HERE}} database"
 task :drop_db do
   conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
   db_name = conn.spec.config[:database];
@@ -12,7 +12,7 @@ task :drop_db do
   ActiveRecord::Base.connection.drop_database(db_name)
 end
 
-desc "create city database"
+desc "create {{API_NAME_HERE}} database"
 task :create_db do
   conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
   db_name = conn.spec.config[:database];
@@ -44,13 +44,13 @@ task :reset_db do
   ActiveRecord::Migrator.migrate('db/migrate')
 end
 
-desc "migrate city database"
+desc "migrate {{API_NAME_HERE}} database"
 task :migrate_db do
   ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
   ActiveRecord::Migrator.migrate('db/migrate')
 end
 
-desc "seed city database"
+desc "seed {{API_NAME_HERE}} database"
 task :seed_db do
   ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
 

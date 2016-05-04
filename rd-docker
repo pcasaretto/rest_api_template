@@ -22,7 +22,7 @@ create_non_existing_volume(){
 }
 
 create_volumes(){
-  create_non_existing_volume city-api-postgres
+  create_non_existing_volume {{API_NAME_HERE}}-postgres
 }
 
 compose_down() {

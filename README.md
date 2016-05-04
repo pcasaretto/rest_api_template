@@ -1,4 +1,4 @@
-# rest_api_template
+# RD REST API Template
 Initial Template for an Rest Api
 
 ## Usage
