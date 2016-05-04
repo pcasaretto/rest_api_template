@@ -14,13 +14,13 @@ Change the file permissions
 
 Run the script informing the arguments in the correct order.
 
-`$ ./generator.sh arg1 arg2 [arg3]`
+`$ ./generator.sh lead_api LeadAPI lead_api_project`
 
 They are respectively:
 
 - api name to be used during project bootstrapping
 - module name to be used by Ruby files
-- directory name where the project must be cloned into
+- path where the project must be cloned into. If not informed the folder will be named using the api name parameter.
 
 # Environment variables
 
