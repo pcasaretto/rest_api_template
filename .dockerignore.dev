@@ -1,0 +1,10 @@
+log
+packages
+.gitignore
+.git
+docker-images/*
+docker-compose.yml
+Procfile
+rd-docker
+README.md
+circle.yml
