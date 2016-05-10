@@ -5,8 +5,9 @@ This is the basic template that must be used when creating new REST APIs that wi
 ## Usage
 
 Dowload the generator.sh file, change the file's permissions.
-
-`$ curl -O https://raw.githubusercontent.com/ResultadosDigitais/rest_api_template/circle-ci/generator.sh && chmod +x generator.sh`
+```
+$ curl -O https://raw.githubusercontent.com/ResultadosDigitais/rest_api_template/master/generator.sh && chmod +x generator.sh`
+```
 
 Run the script informing the arguments in the correct order.
 

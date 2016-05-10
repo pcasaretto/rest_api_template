@@ -25,5 +25,7 @@ cd $DESTINATION_FOLDER
 mv ./lib/rest_api_template ./lib/$API_NAME
 rm -Rf ./.git
 rm -f ./generator.sh
+chmod +x ./entrypoint.sh
+chmod +x ./rd-docker
 
 for f in $(find . -type f); do replace $f; done
