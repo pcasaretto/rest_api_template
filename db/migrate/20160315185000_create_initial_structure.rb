@@ -1,17 +1,15 @@
 class CreateInitialStructure < ActiveRecord::Migration
   def change
     create_table :model1 do |t|
-      t.string :id, primary_key: true
       t.string :name, limit: 60, null: false
-      t.string :id_model2, limit: 2, null: false
+      t.column :id_model2, :integer, null: false
     end
 
-    create_table :model2, id: false do |t|
-      t.string :id, primary_key: true
+    create_table :model2 do |t|
       t.string :name, limit: 60, null: false
     end
 
-    add_foreign_key :model1, :model2
+    add_foreign_key :model1, :model2, column: :id_model2
 
     add_index(:model2, :name)
     add_index(:model1, [:id_model2, :name])

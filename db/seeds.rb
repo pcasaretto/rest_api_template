@@ -1,6 +1,6 @@
 require 'pry-byebug'
 
-ActiveRecord::Base.connection.execute(" INSERT INTO model2 (id, name) VALUES
+ActiveRecord::Base.connection.execute(" INSERT INTO model2 (name) VALUES
 ('Test1'),
 ('Test2'),
 ('Test3'),

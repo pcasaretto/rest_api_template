@@ -9,7 +9,7 @@ api:
   ports:
    - "80:9393"
   environment:
-    DATABASE_URL: 'postgres://postgres@db:5432/api_db'
+    DATABASE_URL: 'postgres://postgres@db/{{API_NAME_HERE}}_db'
     LOGGER_FILE: 'log/{{API_NAME_HERE}}.log'
     WEB_SERVER_PORT: '9393'
     RACK_ENV: development
