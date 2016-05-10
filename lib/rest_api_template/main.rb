@@ -4,7 +4,11 @@ require 'json'
 require 'fileutils'
 require 'active_record'
 
-# require_relative 'middlewares/url_based_304.rb'
+require "./lib/{{API_NAME_HERE}}/version.rb"
+require "./lib/{{API_NAME_HERE}}/models/model1.rb"
+require "./lib/{{API_NAME_HERE}}/models/model2.rb"
+require "./lib/{{API_NAME_HERE}}/controllers/health_check_controller.rb"
+require "./lib/{{API_NAME_HERE}}/controllers/model1_controller.rb"
 
 module RestApiTemplate
   class Main < RestApiBase::Controllers::RestApiBaseController

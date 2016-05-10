@@ -8,9 +8,7 @@ require 'pry-byebug'
 ENV['RACK_ENV'] = 'test'
 
 # Requiring api files
-Dir[File.join(File.dirname(__FILE__), '..', "lib", "{{API_NAME_HERE}}", "**", "*.rb")].each do |file|
-  require file
-end
+require "./lib/{{API_NAME_HERE}}/main.rb"
 
 RSpec.configure do |config|
   conn = ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])

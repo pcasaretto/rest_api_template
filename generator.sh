@@ -23,6 +23,7 @@ git clone git@github.com:ResultadosDigitais/rest_api_template.git $DESTINATION_F
 cd $DESTINATION_FOLDER
 
 mv ./lib/rest_api_template ./lib/$API_NAME
+mv ./spec/lib/rest_api_template ./spec/lib/$API_NAME
 rm -Rf ./.git
 rm -f ./generator.sh
 chmod +x ./entrypoint.sh
