@@ -103,7 +103,7 @@ build_image(){
   fi
 
   if [[ "$tag" == "" ]]; then
-    env="latest"
+    tag="latest"
   fi
 
   if [[ "$env" == "prod" ]]; then
