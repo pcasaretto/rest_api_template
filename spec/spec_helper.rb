@@ -8,7 +8,7 @@ require 'pry-byebug'
 ENV['RACK_ENV'] = 'test'
 
 # Requiring api files
-Dir[File.join(File.dirname(__FILE__), '..', "lib", "API_NAME_HERE", "**", "*.rb")].each do |file|
+Dir[File.join(File.dirname(__FILE__), '..', "lib", "{{API_NAME_HERE}}", "**", "*.rb")].each do |file|
   require file
 end
 
