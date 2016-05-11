@@ -1,5 +1,7 @@
 #!/bin/sh
 
+bundle install
+
 sleep 5
 
 {
