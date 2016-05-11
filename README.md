@@ -6,7 +6,7 @@ This is the basic template that must be used when creating new REST APIs that wi
 
 Dowload the generator.sh file, change the file's permissions.
 ```
-$ curl -O https://raw.githubusercontent.com/hugoluchessi/rest_api_template/master/generator.sh && chmod +x generator.sh
+$ curl -O https://raw.githubusercontent.com/ResultadosDigitais/rest_api_template/master/generator.sh && chmod +x generator.sh
 ```
 
 Run the script informing the arguments in the correct order.
@@ -92,4 +92,20 @@ Push the docker image to the docker hub repository. Only allowed people are able
     - ```sudo service docker stop```
 * Starts the docker daemon:
     - ```sudo service docker start```
+    - 
+# Create GitHub repository
+Ask a GitHub administrator to create the repository for your API
 
+# Create DockerHub repository
+Ask a DockerHub administrator to create the repository for your API
+
+# Enable Build on Circle CI
+Ask a GitHub and Circle CI administrator to enable buld for your repository
+
+## Reminder
+Ask the person you asked to enable the build to set env variables:
+* DOCKER_EMAIL
+* DOCKER_PASS
+* DOCKER_USER
+
+Without it, the build will not be concluded
