@@ -1,12 +1,13 @@
 #!/bin/bash
 
 command=$1
+app="{{API_NAME_HERE}}"
 
 get_container_id(){
   app=$1
 
   if [[ "$app" == "" ]]; then
-    app="api"
+    app="_api"
   fi
 
   docker ps | grep $app | awk '{print $1}'
@@ -94,7 +95,6 @@ docker_install(){
 }
 
 build_image(){
-  app="{{API_NAME_HERE}}"
   env=$1
   tag=$2
 

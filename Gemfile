@@ -16,4 +16,8 @@ group :development, :test do
   gem 'byebug', '~> 8.2.1'
   gem 'pry-byebug', '~> 3.3.0'
   gem 'bundler', '~> 1.10'
+  gem 'rspec', '~> 3.3.0'
+  gem 'factory_girl', '~> 4.5.0'
+  gem 'faker', '~> 1.5.0'
+  gem 'rack-test', '~> 0.6.3'
 end
