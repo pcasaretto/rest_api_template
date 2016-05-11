@@ -21,7 +21,7 @@ They are respectively:
 
 # Environment variables
 
-Change ENV configuration on docker-compose.yml if applicable.
+Change ENV configuration on docker-compose.yml and circle.yml if applicable.
 
 # Running your API project using docker - Linux
 
@@ -92,3 +92,20 @@ Push the docker image to the docker hub repository. Only allowed people are able
     - ```sudo service docker stop```
 * Starts the docker daemon:
     - ```sudo service docker start```
+
+# Create GitHub repository
+Ask a GitHub administrator to create the repository for your API
+
+# Create DockerHub repository
+Ask a DockerHub administrator to create the repository for your API
+
+# Enable Build on Circle CI
+Ask a GitHub and Circle CI administrator to enable buld for your repository
+
+## Reminder
+Ask the person you asked to enable the build to set env variables:
+DOCKER_EMAIL
+DOCKER_PASS
+DOCKER_USER
+
+Without it, the build will not be concluded
