@@ -1,8 +1,8 @@
 GIT
-  remote: https://github.com/hugoluchessi/rest_api_base.git
+  remote: https://github.com/ResultadosDigitais/rest_api_base.git
   revision: 0fe03fe809aa70d79585f0b5a79a145dcc4ec533
   specs:
-    rest_api_base (0.0.1)
+    rest_api_base (0.0.2)
       json (~> 1.8.3)
       sinatra (~> 1.4.0)
       sinatra-contrib (~> 1.4.0)
