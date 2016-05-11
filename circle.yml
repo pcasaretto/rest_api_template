@@ -6,9 +6,8 @@ machine:
   environment:
       DATABASE_URL: 'postgres://ubuntu@127.0.0.1/circle_test'
       LOGGER_FILE: 'log/{{API_NAME_HERE}}.log'
-      WEB_SERVER_PORT: '{{API_SERVER_PORT}}'
-      RACK_ENV: {{APP_ENVIRONMENT}}
-      HTTP_CACHE_EXPIRATION: {{HTTP_CACHE_EXPIRATION}}
+      WEB_SERVER_PORT: '9393'
+      RACK_ENV: development
   services:
     - docker
 database:
@@ -17,14 +16,14 @@ database:
 test:
   override:
     - bundle exec rspec spec
-  post:
-    - docker info
-    - docker --version
-    - ./rd-docker build prod latest
 
 deployment:
   hub:
+    branch: master
     commands:
-        # Please, do not change the first line below. Circle CI uses these environment variables for the sake of deployments
-        - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-        - docker push resultadosdigitais/{{API_NAME_HERE}}:{{IMAGE_TAG}}
+      - docker info
+      - docker --version
+      - ./rd-docker build prod latest
+      #Please, do not change the first line below. Circle CI uses these environment variables for the sake of deployments
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push resultadosdigitais/{{API_NAME_HERE}}:latest
