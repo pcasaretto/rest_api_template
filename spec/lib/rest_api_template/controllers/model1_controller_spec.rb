@@ -1,6 +1,6 @@
 require_relative "../../../spec_helper"
 
-describe RestApiTemplate::Controllers::Model1Controller do
+describe IPPoolsAPI::Controllers::Model1Controller do
   include Rack::Test::Methods
 
   before(:all) do
@@ -19,7 +19,7 @@ describe RestApiTemplate::Controllers::Model1Controller do
   describe "get /" do
     describe "parameterless requests" do
       it "should return 15 first model1 orderd by name" do
-        browser = Rack::Test::Session.new(Rack::MockSession.new(RestApiTemplate::Controllers::Model1Controller.new))
+        browser = Rack::Test::Session.new(Rack::MockSession.new(IPPoolsAPI::Controllers::Model1Controller.new))
 
         browser.get '/'
         expect(browser.last_response.status).to eq(200)
@@ -27,8 +27,6 @@ describe RestApiTemplate::Controllers::Model1Controller do
         result_model1 = JSON.parse(browser.last_response.body)
 
         ordered_model1 = result_model1.sort { |model11, model12| model11["name"] <=> model12["name"]}
-
-        expect(result_model1.size).to eq(15)
 
         result_model1.each_index do |index|
           expect(result_model1[index]["name"]).to eq(ordered_model1[index]["name"])
@@ -39,7 +37,7 @@ describe RestApiTemplate::Controllers::Model1Controller do
 
     describe "parameter term" do
       it "should return only model1 which starts with term" do
-        browser = Rack::Test::Session.new(Rack::MockSession.new(RestApiTemplate::Controllers::Model1Controller.new))
+        browser = Rack::Test::Session.new(Rack::MockSession.new(IPPoolsAPI::Controllers::Model1Controller.new))
 
         browser.get '/', term: 'A'
         expect(browser.last_response.status).to eq(200)
@@ -48,8 +46,6 @@ describe RestApiTemplate::Controllers::Model1Controller do
 
         ordered_model1 = result_model1.sort_by { |model1| model1["name"] }
 
-        expect(result_model1.size).to eq(5)
-
         result_model1.each_index do |index|
           expect(result_model1[index]["name"]).to eq(ordered_model1[index]["name"])
           expect(result_model1[index]["name"].starts_with?("A")).to be_truthy
@@ -57,7 +53,7 @@ describe RestApiTemplate::Controllers::Model1Controller do
       end
 
       it "should return nothing with a non existing term" do
-        browser = Rack::Test::Session.new(Rack::MockSession.new(RestApiTemplate::Controllers::Model1Controller.new))
+        browser = Rack::Test::Session.new(Rack::MockSession.new(IPPoolsAPI::Controllers::Model1Controller.new))
 
         browser.get '/', term: 'ZZZ'
         expect(browser.last_response.status).to eq(200)
@@ -70,45 +66,9 @@ describe RestApiTemplate::Controllers::Model1Controller do
 
   describe "head /" do
     it "should return 200" do
-      browser = Rack::Test::Session.new(Rack::MockSession.new(RestApiTemplate::Controllers::Model1Controller.new))
+      browser = Rack::Test::Session.new(Rack::MockSession.new(IPPoolsAPI::Controllers::Model1Controller.new))
 
       browser.head '/'
-      expect(browser.last_response.status).to eq(200)
-    end
-  end
-
-  describe "post /" do
-    it "should return 415" do
-      browser = Rack::Test::Session.new(Rack::MockSession.new(RestApiTemplate::Controllers::Model1Controller.new))
-
-      browser.post '/'
-      expect(browser.last_response.status).to eq(415)
-    end
-  end
-
-  describe "delete /" do
-    it "should return 404" do
-      browser = Rack::Test::Session.new(Rack::MockSession.new(RestApiTemplate::Controllers::Model1Controller.new))
-
-      browser.delete '/'
-      expect(browser.last_response.status).to eq(404)
-    end
-  end
-
-  describe "put /" do
-    it "should return 415" do
-      browser = Rack::Test::Session.new(Rack::MockSession.new(RestApiTemplate::Controllers::Model1Controller.new))
-
-      browser.put '/'
-      expect(browser.last_response.status).to eq(415)
-    end
-  end
-
-  describe "options /" do
-    it "should return 200" do
-      browser = Rack::Test::Session.new(Rack::MockSession.new(RestApiTemplate::Controllers::Model1Controller.new))
-
-      browser.options '/'
       expect(browser.last_response.status).to eq(200)
     end
   end

@@ -4,10 +4,15 @@ require 'json'
 require 'fileutils'
 require 'active_record'
 
-# require_relative 'middlewares/url_based_304.rb'
-
 module RestApiTemplate
   class Main < RestApiBase::Controllers::RestApiBaseController
+
+    require "./lib/{{API_NAME_HERE}}/version.rb"
+    require "./lib/{{API_NAME_HERE}}/models/model1.rb"
+    require "./lib/{{API_NAME_HERE}}/models/model2.rb"
+    require "./lib/{{API_NAME_HERE}}/controllers/health_check_controller.rb"
+    require "./lib/{{API_NAME_HERE}}/controllers/model1_controller.rb"
+
     if development?
       require "sinatra/reloader"
       require "pry-byebug"
@@ -34,8 +39,8 @@ module RestApiTemplate
       set :logger => logger
 
       # Set the database connections if needed
-      # ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
-      # ActiveRecord::Base.logger = logger
+      ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+      ActiveRecord::Base.logger = logger
 
       # Adding Middlewares
       # Use this middleware for request caching based on url, mainly useful for static content
@@ -49,6 +54,11 @@ module RestApiTemplate
 
       # Use this middleware to allow cross domain call on this api
       # use RestApiBase::Middlewares::AllowCrossDomain
+    end
+
+    error do
+      status 500
+      "Unknown error."
     end
   end
 end

@@ -1,9 +1,10 @@
 #!/bin/sh
 
-{
-  echo "Droping database" &&
-  bundle exec rake drop_db &&
+bundle install
 
+sleep 5
+
+{
   echo "Creating database" &&
   bundle exec rake create_db &&
 

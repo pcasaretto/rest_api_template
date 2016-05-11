@@ -4,13 +4,10 @@ This is the basic template that must be used when creating new REST APIs that wi
 
 ## Usage
 
-Dowload the generator.sh file and run it passing the proper arguments.
-
-`$ curl -O https://raw.githubusercontent.com/ResultadosDigitais/rest_api_template/circle-ci/generator.sh`
-
-Change the file permissions
-
-`$ chmod +x generator.sh`
+Dowload the generator.sh file, change the file's permissions.
+```
+$ curl -O https://raw.githubusercontent.com/hugoluchessi/rest_api_template/master/generator.sh && chmod +x generator.sh
+```
 
 Run the script informing the arguments in the correct order.
 
@@ -24,7 +21,7 @@ They are respectively:
 
 # Environment variables
 
-Change ENV configuration on docker-compose.yml if applicable.
+Change ENV configuration on docker-compose.yml and circle.yml if applicable.
 
 # Running your API project using docker - Linux
 
@@ -95,3 +92,4 @@ Push the docker image to the docker hub repository. Only allowed people are able
     - ```sudo service docker stop```
 * Starts the docker daemon:
     - ```sudo service docker start```
+

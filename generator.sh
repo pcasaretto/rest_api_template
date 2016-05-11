@@ -15,13 +15,18 @@ replace(){
 }
 
 if [ "$DESTINATION_FOLDER" = "" ]; then
-  DESTINATION_FOLDER=$API_NAME
+  DESTINATION_FOLDER=$(pwd)/$API_NAME
 fi
 
 git clone git@github.com:ResultadosDigitais/rest_api_template.git $DESTINATION_FOLDER
+
 cd $DESTINATION_FOLDER
 
-mv lib/rest_api_template lib/$API_NAME
-rm -Rf .git
+mv ./lib/rest_api_template ./lib/$API_NAME
+mv ./spec/lib/rest_api_template ./spec/lib/$API_NAME
+rm -Rf ./.git
+rm -f ./generator.sh
+chmod +x ./entrypoint.sh
+chmod +x ./rd-docker
 
 for f in $(find . -type f); do replace $f; done

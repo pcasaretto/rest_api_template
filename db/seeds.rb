@@ -1,6 +1,6 @@
 require 'pry-byebug'
 
-ActiveRecord::Base.connection.execute(" INSERT INTO model2 (id, name) VALUES
+ActiveRecord::Base.connection.execute(" INSERT INTO model2s (name) VALUES
 ('Test1'),
 ('Test2'),
 ('Test3'),
@@ -9,7 +9,7 @@ ActiveRecord::Base.connection.execute(" INSERT INTO model2 (id, name) VALUES
 ('Test6'),
 ('Test7')");
 
-ActiveRecord::Base.connection.execute(" INSERT INTO model1 (name, id_model2) VALUES
+ActiveRecord::Base.connection.execute(" INSERT INTO model1s (name, id_model2) VALUES
 ('Test Model 1', 1),
 ('Test Model 2', 1),
 ('Test Model 3', 2),
