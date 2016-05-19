@@ -17,6 +17,10 @@ RSpec.configure do |config|
   temp_database_url = ENV['DATABASE_URL'].sub(conn.spec.config[:database], db_name)
   conn.disconnect!
 
+  # Disable usage of monkey patch version of describe
+  # by preventing global injection of RSpec's DSL
+  config.expose_dsl_globally = false
+
   config.before(:suite) do
     ActiveRecord::Base.establish_connection(temp_database_url)
     ActiveRecord::Migrator.migrate('db/migrate')
