@@ -2,8 +2,6 @@ require "bundler"
 Bundler.setup
 require "rest_api_base"
 
-require File.expand_path "../lib/{{API_NAME_HERE}}/main.rb", __FILE__
-
 # Requiring api files
 require "./lib/{{API_NAME_HERE}}/main.rb"
 
