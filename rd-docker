@@ -1,7 +1,7 @@
 #!/bin/bash
 
 command=$1
-app="{{API_NAME_HERE}}"
+api_name="{{API_NAME_HERE}}"
 
 get_container_id(){
   app=$1
@@ -10,7 +10,7 @@ get_container_id(){
     app="_api"
   fi
 
-  docker ps | grep $app | awk '{print $1}'
+  docker ps | grep $api_name"_"$app | awk '{print $1}'
 }
 
 create_non_existing_volume(){
@@ -23,7 +23,7 @@ create_non_existing_volume(){
 }
 
 create_volumes(){
-  create_non_existing_volume {{API_NAME_HERE}}-postgres
+  create_non_existing_volume $api_name"_postgres"
 }
 
 compose_down() {
@@ -67,12 +67,12 @@ docker_ip(){
 
 clear_containers(){
   echo "Removing possibly existing containers"
-  docker rm -f $(docker ps -aq)
+  docker rm -f $(docker ps -a | grep $app_name | awk '{ print $1 }')
 }
 
 clear_volumes(){
   echo "Removing possibly existing volumes"
-  docker volume rm $(docker volume ls -q)
+  docker volume rm $(docker volume ls -q | grep $app_name)
 }
 
 docker_reset(){
@@ -112,8 +112,8 @@ build_image(){
     cp ./.dockerignore.dev ./.dockerignore
   fi
 
-  echo "Building '$env' image resultadosdigitais/$app:$tag"
-  docker build -t "resultadosdigitais/$app:$tag" -f docker-images/$env/Dockerfile .
+  echo "Building '$env' image resultadosdigitais/$api_name:$tag"
+  docker build -t "resultadosdigitais/$api_name:$tag" -f docker-images/$env/Dockerfile .
   rm ./.dockerignore
 }
 
@@ -124,8 +124,8 @@ push_image(){
     tag="latest"
   fi
 
-  echo "Pushing image '$app:$tag' to registry"
-  docker push resultadosdigitais/$app:$tag
+  echo "Pushing image '$api_name:$tag' to registry"
+  docker push resultadosdigitais/$api_name:$tag
 }
 
 case "$command" in
@@ -175,13 +175,13 @@ case "$command" in
     exit 0
     ;;
   console)
-    echo "Starting up TTY Session"
-    exec_container $2
+    echo "Starting up TTY Session on 'web'"
+    exec_container "web" "bash"
     exit 0
     ;;
   exec)
     echo "Executing '$3' on $2"
-    exec_container $2 $3
+    exec_container $2 "$3"
     exit 0
     ;;
   build)
