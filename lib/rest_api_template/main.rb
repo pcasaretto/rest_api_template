@@ -6,19 +6,18 @@ require 'active_record'
 
 module RestApiTemplate
   class Main < RestApiBase::Controllers::RestApiBaseController
-
-    require "./lib/{{API_NAME_HERE}}/version.rb"
-    require "./lib/{{API_NAME_HERE}}/models/model1.rb"
-    require "./lib/{{API_NAME_HERE}}/models/model2.rb"
-    require "./lib/{{API_NAME_HERE}}/controllers/health_check_controller.rb"
-    require "./lib/{{API_NAME_HERE}}/controllers/model1_controller.rb"
-
     if development?
       require "sinatra/reloader"
       require "pry-byebug"
 
       register Sinatra::Reloader
     end
+    
+    require "./lib/{{API_NAME_HERE}}/version.rb"
+    require "./lib/{{API_NAME_HERE}}/models/model1.rb"
+    require "./lib/{{API_NAME_HERE}}/models/model2.rb"
+    require "./lib/{{API_NAME_HERE}}/controllers/health_check_controller.rb"
+    require "./lib/{{API_NAME_HERE}}/controllers/model1_controller.rb"
 
     configure do
       # Disable unused features to speed up

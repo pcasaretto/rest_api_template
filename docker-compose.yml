@@ -3,6 +3,7 @@ api:
   command: "./entrypoint.sh"
   restart: always
   volumes:
+    - ~:/root
     - .:/var/app
   links:
     - db
@@ -16,4 +17,5 @@ api:
 db:
   image: postgres:9.4.4
   volumes:
-    - {{API_NAME_HERE}}-postgres:/var/lib/postgresql/data
+    - ~:/root
+    - {{API_NAME_HERE}}_postgres:/var/lib/postgresql/data

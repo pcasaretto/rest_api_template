@@ -1,6 +1,6 @@
 require_relative "../../../spec_helper"
 
-describe IPPoolsAPI::Controllers::Model1Controller do
+RSpec.describe IPPoolsAPI::Controllers::Model1Controller do
   include Rack::Test::Methods
 
   before(:all) do

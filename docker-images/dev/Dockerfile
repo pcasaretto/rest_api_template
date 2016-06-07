@@ -10,7 +10,6 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile ./Gemfile
-COPY Gemfile.lock ./Gemfile.lock
 
 RUN gem install bundler
 

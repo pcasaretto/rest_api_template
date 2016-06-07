@@ -1,6 +1,6 @@
 require_relative "../../../spec_helper"
 
-describe IPPoolsAPI::Controllers::HealthCheckController do
+RSpec.describe IPPoolsAPI::Controllers::HealthCheckController do
   include Rack::Test::Methods
 
   let (:status_route) { return "/status"}
