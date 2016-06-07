@@ -116,8 +116,8 @@ build_image(){
     cp ./.dockerignore.dev ./.dockerignore
   fi
 
-  echo "Building '$env' image resultadosdigitais/$api_name:$tag"
-  docker build -t "resultadosdigitais/$api_name:$tag" -f docker-images/$env/Dockerfile .
+  echo "Building '$env' image hugoluchessi/$api_name:$tag"
+  docker build -t "hugoluchessi/$api_name:$tag" -f docker-images/$env/Dockerfile .
   rm ./.dockerignore
 }
 
@@ -129,7 +129,7 @@ push_image(){
   fi
 
   echo "Pushing image '$api_name:$tag' to registry"
-  docker push resultadosdigitais/$api_name:$tag
+  docker push hugoluchessi/$api_name:$tag
 }
 
 case "$command" in
