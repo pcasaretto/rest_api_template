@@ -1,8 +1,10 @@
 log
 packages
-spec/*
+spec
 .gitignore
 .git
+api-docker
+generator.sh
 docker-images/*
 docker-compose.yml
 Procfile

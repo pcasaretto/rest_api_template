@@ -1,0 +1,214 @@
+#!/bin/bash
+
+command=$1
+
+#api_name="{{API_NAME_HERE}}"
+api_name="test_api"
+IMAGE_NAME=hugoluchessi/$api_name
+TAG="latest"
+app_prefix=$api_name"_"
+main_container_name="api"
+header_indicator="==========>"
+command_indicator=">"
+
+get_container_id(){
+  app=$1
+
+  if [[ "$app" == "" ]]; then
+    app=$main_container_name
+  fi
+
+  docker ps | grep $app_prefix$app | awk '{print $1}'
+}
+
+# Validation methods
+ensure_volume(){
+  volume_id=$(docker volume ls -q | grep $1)
+
+  if [[ "$volume_id" == "" ]]; then
+    echo_command "Creating volume for $1"
+    docker volume create --name $1
+  fi
+}
+
+ensure_volumes(){
+  ensure_volume $app_prefix"postgres"
+}
+
+ensure_uptodate_image(){
+  echo_command "Checking image updates..."
+  docker pull $IMAGE_NAME:$TAG
+}
+
+# Housekeeping methods
+clear_containers(){
+  echo_command "Removing possibly existing containers"
+  docker rm -f $(docker ps -a | grep $app_prefix | awk '{ print $1 }') >> /dev/null 2>&1
+}
+
+clear_volumes(){
+  echo_command "Removing possibly existing volumes"
+  docker volume rm $(docker volume ls -q | grep $app_prefix) >> /dev/null 2>&1
+}
+
+# Infrastructure methods
+install_engine(){
+  if [[ `uname` != 'Linux' ]]; then
+    echo "Sorry, this only works on Linux right now :("
+    exit 1
+  fi
+  echo_command "Setting up workstation Ubuntu 14.04+"
+  # Install Docker
+  curl -fsS https://get.docker.com/ | bash
+
+  # Install Docker-Compose
+  curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+  chmod +x /usr/local/bin/docker-compose
+  sudo usermod -aG docker $USER
+}
+
+execute_command() {
+  if [[ "$1" == "help" ]]; then
+    show_exec_help
+    exit 0
+  fi
+
+  app=$1
+  cmd=$2
+
+  if [[ "$app" == "" ]]; then
+    echo_command "Container app is a required parameter."
+    show_exec_help
+    exit 1
+  fi
+
+  main_container_id=$(get_container_id)
+  if [[ "$main_container_id" == "" ]]; then
+    raise_infrastructure
+  fi
+
+  container_id=$(get_container_id $app)
+  if [[ "$container_id" == "" ]]; then
+    echo_command "Container '$app' not found"
+    exit 1
+  fi
+
+  echo_command "Executing '$cmd' on $app "
+  docker exec -it $container_id $cmd
+}
+
+raise_infrastructure(){
+  echo_command "Raising infrastructure"
+  ensure_volumes
+  ensure_uptodate_image
+  docker-compose run -d --service-ports $main_container_name "tail -f /dev/null"
+}
+
+# Instrumentation methods
+echo_command(){
+  echo "$command_indicator $1"
+}
+
+build_image(){
+  env=$1
+  tag=$2
+
+  if [[ "$env" == "" ]]; then
+    env="dev"
+  fi
+
+  if [[ "$env" == "prod" ]]; then
+    tag="$TAG"
+    cp ./.dockerignore.prod ./.dockerignore
+  else
+    tag="$TAG-$env"
+    cp ./.dockerignore.dev ./.dockerignore
+  fi
+
+  echo "Building '$env' image hugoluchessi/$api_name:$tag"
+  docker build -t "$IMAGE_NAME:$tag" -f docker-images/$env/Dockerfile .
+  rm ./.dockerignore
+}
+
+push_image(){
+  end=$1
+  tag=$2
+
+  if [[ "$env" == "" ]]; then
+    env="dev"
+  fi
+
+  if [[ "$tag" == "" ]]; then
+    tag="$TAG-$env"
+  fi
+
+  echo "Pushing image '$api_name:$tag' to registry"
+  docker push $IMAGE_NAME:$tag
+}
+
+
+show_help(){
+  echo_command "Api Docker usage:"
+  echo_command "  install    - install docker and dependencies"
+  echo_command "  reset      - stop and remove all containers and drops all volumes within the compose "
+  echo_command "  stop       - stop and remove all containers within the compose"
+  echo_command "  start, s   - execute web aplication on main container"
+  echo_command "  console, c - execute bash console on main container"
+  echo_command "  exec, e    - ensure running infrastructure and execute a command in a given app container (ex: exec db \"psql -U postgres\")."
+  echo_command "               for help on this subcommand (exec help)"
+  echo_command "  build      - build docker image for a given environment"
+  echo_command "  push       - push docker image for a given environment"
+}
+
+show_exec_help(){
+  echo_command "RD Docker EXEC usage:"
+  echo_command "  exec [container_app] \"[command]\")"
+  echo_command "    container_app - name of the app container (see 'docker-compose.yml' for container names)"
+  echo_command "    command       - command to be run inside the chosen container"
+}
+
+echo "$header_indicator Docker: $command"
+case "$command" in
+  install)
+    install_engine
+    exit 0
+    ;;
+  reset)
+    clear_containers
+    clear_volumes
+    exit 0
+    ;;
+  start | s)
+    echo_command "Starting web application"
+    execute_command "web" "/var/app/entrypoint.sh"
+    exit 0
+    ;;
+  stop)
+    echo_command "Stopping containers..."
+    clear_containers
+    echo_command "Stopping containers... Done"
+    exit 0
+    ;;
+  console | c)
+    echo_command "Starting up TTY Session on main container"
+    execute_command "web" "bash"
+    exit 0
+    ;;
+  exec | e)
+    execute_command $2 "$3"
+    exit 0
+    ;;
+  build)
+    build_image $2 $3
+    exit 0
+    ;;
+  push)
+    push_image $2 $3
+    exit 0
+    ;;
+  *)
+    echo_command "Command not found"
+    show_help
+    exit 1
+    ;;
+esac

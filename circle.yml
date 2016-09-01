@@ -2,7 +2,7 @@ machine:
   timezone:
     America/Sao_Paulo
   ruby:
-    version: 2.2.2
+    version: 2.3.1
   environment:
       DATABASE_URL: 'postgres://ubuntu@127.0.0.1/circle_test'
       LOGGER_FILE: 'log/{{API_NAME_HERE}}.log'
@@ -23,7 +23,7 @@ deployment:
     commands:
       - docker info
       - docker --version
-      - ./rd-docker build prod latest
+      - ./api-docker build prod latest
       #Please, do not change the first line below. Circle CI uses these environment variables for the sake of deployments
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push resultadosdigitais/{{API_NAME_HERE}}:latest
+      - docker push hugoluchessi/{{API_NAME_HERE}}:latest

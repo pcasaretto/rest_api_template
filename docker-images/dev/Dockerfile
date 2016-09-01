@@ -1,20 +1,17 @@
-FROM ruby:2.2.2
+FROM ruby:2.3.1-alpine
 
-RUN apt-get update \
-  && apt-get install --no-install-recommends -y \
-    apt-utils \
-    libicu-dev \
-    nodejs \
-    git \
-    postgresql-client \
-  && rm -rf /var/lib/apt/lists/*
+RUN apk --update add \
+  postgresql-client \
+  nodejs \
+  git \
+  && rm -rf /var/cache/apk/*
 
-COPY Gemfile ./Gemfile
+RUN mkdir -p /var/app
+WORKDIR /var/app
+
+COPY Gemfile Gemfile
 
 RUN gem install bundler
-
-RUN bundle install
-
-WORKDIR /var/app
+RUN cd /var/app && bundle install
 
 CMD ["./entrypoint.sh"]
