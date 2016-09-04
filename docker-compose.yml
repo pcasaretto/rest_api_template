@@ -1,5 +1,5 @@
 api:
-  image: hugoluchessi/{{API_NAME_HERE}}:latest-dev
+  image: hugoluchessi/rest_api_template:latest-dev
   command: "./entrypoint.sh"
   restart: always
   volumes:
@@ -10,12 +10,12 @@ api:
   ports:
    - "80:9393"
   environment:
-    DATABASE_URL: 'postgres://postgres@db/{{API_NAME_HERE}}_db'
-    LOGGER_FILE: 'log/{{API_NAME_HERE}}.log'
+    DATABASE_URL: 'postgres://postgres@db/rest_api_template_db'
+    LOGGER_FILE: 'log/rest_api_template.log'
     WEB_SERVER_PORT: '9393'
     RACK_ENV: development
 db:
   image: postgres:9.4.4
   volumes:
     - ~:/root
-    - {{API_NAME_HERE}}_postgres:/var/lib/postgresql/data
+    - rest_api_template_postgres:/var/lib/postgresql/data

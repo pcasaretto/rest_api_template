@@ -5,7 +5,7 @@ machine:
     version: 2.3.1
   environment:
       DATABASE_URL: 'postgres://ubuntu@127.0.0.1/circle_test'
-      LOGGER_FILE: 'log/{{API_NAME_HERE}}.log'
+      LOGGER_FILE: 'log/rest_api_template.log'
       WEB_SERVER_PORT: '9393'
       RACK_ENV: development
   services:
@@ -26,4 +26,4 @@ deployment:
       - ./api-docker build prod latest
       #Please, do not change the first line below. Circle CI uses these environment variables for the sake of deployments
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push hugoluchessi/{{API_NAME_HERE}}:latest
+      - docker push hugoluchessi/rest_api_template:latest

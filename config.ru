@@ -3,7 +3,7 @@ Bundler.setup
 require "rest_api_base"
 
 # Requiring api files
-require "./lib/{{API_NAME_HERE}}/main.rb"
+require "./lib/rest_api_template/main.rb"
 
 # Run application
 run RestApiTemplate::Main.new

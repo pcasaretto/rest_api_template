@@ -2,7 +2,7 @@
 
 command=$1
 
-api_name="{{API_NAME_HERE}}"
+api_name="rest_api_template"
 IMAGE_NAME=hugoluchessi/$api_name
 TAG="latest"
 main_container_name="api"
