@@ -27,6 +27,6 @@ mv ./spec/lib/rest_api_template ./spec/lib/$API_NAME
 rm -Rf ./.git
 rm -f ./generator.sh
 chmod +x ./script/entrypoint.sh
-chmod +x ./script/rd-docker
+chmod +x ./script/api-docker
 
 for f in $(find . -type f); do replace $f; done
