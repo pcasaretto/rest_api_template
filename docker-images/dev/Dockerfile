@@ -9,12 +9,11 @@ RUN apt-get update \
   nodejs \
 && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /var/app
-WORKDIR /var/app
-
 COPY Gemfile Gemfile
 
 RUN gem install bundler
-RUN cd /var/app && bundle install
+RUN bundle install
+RUN rm Gemfile
 
-CMD ["./entrypoint.sh"]
+RUN mkdir -p /var/app
+WORKDIR /var/app

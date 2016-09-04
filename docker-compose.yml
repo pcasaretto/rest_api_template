@@ -1,6 +1,6 @@
 api:
   image: hugo1987br/rest_api_template:latest-dev
-  command: "./entrypoint.sh"
+  command: "/var/app/script/entrypoint.sh"
   restart: always
   volumes:
     - ~:/root
