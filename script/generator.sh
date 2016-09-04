@@ -18,7 +18,7 @@ if [ "$DESTINATION_FOLDER" = "" ]; then
   DESTINATION_FOLDER=$(pwd)/$API_NAME
 fi
 
-git clone git@github.com:ResultadosDigitais/rest_api_template.git $DESTINATION_FOLDER
+git clone git@github.com:hugoluchessi/rest_api_template.git $DESTINATION_FOLDER
 
 cd $DESTINATION_FOLDER
 
