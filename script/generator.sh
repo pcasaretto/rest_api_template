@@ -9,8 +9,8 @@ replace(){
     local module_name=$MODULE_NAME
 
     if [ ! $1 = "./generator.sh" ]; then
-      sed -i "s/test_api/${replace}/g" $1
-      sed -i "s/TestAPI/${module_name}/g" $1
+      sed -i "s/rest_api_template/${replace}/g" $1
+      sed -i "s/RestApiTemplate/${module_name}/g" $1
     fi
 }
 

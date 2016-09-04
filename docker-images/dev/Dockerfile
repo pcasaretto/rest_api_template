@@ -1,18 +1,13 @@
-FROM ruby:2.3.1-alpine
+FROM ruby:2.3.1
 
-RUN apk --update add \
+# install primary dependencies
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends \
   postgresql-client \
-  postgresql-dev \
+  apt-utils \
+  libicu-dev \
   nodejs \
-  git \
-  build-base \
-  ruby-dev \
-  libc-dev \
-  linux-headers \
-  openssl-dev \
-  libxml2-dev \
-  libxslt-dev \
-  && rm -rf /var/cache/apk/*
+&& rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/app
 WORKDIR /var/app

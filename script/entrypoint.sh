@@ -38,7 +38,7 @@ ensure_db(){
 bundle check > /dev/null 2>&1 || bundle install
 
 wait_for_db "db"
-ensure_db "db" "rdstation_development"
+ensure_db "db" "{{API_NAME_HERE}}_development"
 
 if [ "$#" == 0 ]
 then
