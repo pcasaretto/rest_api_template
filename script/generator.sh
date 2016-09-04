@@ -9,8 +9,8 @@ replace(){
     local module_name=$MODULE_NAME
 
     if [ ! $1 = "./generator.sh" ]; then
-      sed -i "s/{{API_NAME_HERE}}/${replace}/g" $1
-      sed -i "s/RestApiTemplate/${module_name}/g" $1
+      sed -i "s/test_api/${replace}/g" $1
+      sed -i "s/TestAPI/${module_name}/g" $1
     fi
 }
 
@@ -26,7 +26,7 @@ mv ./lib/rest_api_template ./lib/$API_NAME
 mv ./spec/lib/rest_api_template ./spec/lib/$API_NAME
 rm -Rf ./.git
 rm -f ./generator.sh
-chmod +x ./entrypoint.sh
-chmod +x ./rd-docker
+chmod +x ./script/entrypoint.sh
+chmod +x ./script/rd-docker
 
 for f in $(find . -type f); do replace $f; done
