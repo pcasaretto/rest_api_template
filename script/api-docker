@@ -102,7 +102,7 @@ raise_infrastructure(){
   echo_command "Raising infrastructure"
   ensure_volumes
   ensure_uptodate_dev_image
-  docker-compose run -d --service-ports $main_container_name "tail -f /dev/null"
+  docker-compose run -d --service-ports $main_container_name tail -f /dev/null
 }
 
 # Instrumentation methods
@@ -181,7 +181,7 @@ case "$command" in
     ;;
   start | s)
     echo_command "Starting web application"
-    execute_command $main_container_name "/var/app/entrypoint.sh"
+    execute_command $main_container_name "sh ./script/entrypoint.sh"
     exit 0
     ;;
   stop)

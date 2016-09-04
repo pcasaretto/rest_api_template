@@ -1,6 +1,6 @@
 api:
   image: hugo1987br/rest_api_template:latest-dev
-  command: "/var/app/script/entrypoint.sh"
+  command: "sh ./script/entrypoint.sh"
   restart: always
   volumes:
     - ~:/root
@@ -8,11 +8,13 @@ api:
   links:
     - db
   ports:
-   - "80:9393"
+   - "8080:9393"
   environment:
     DATABASE_URL: 'postgres://postgres@db/rest_api_template_db'
     LOGGER_FILE: 'log/rest_api_template.log'
-    WEB_SERVER_PORT: '9393'
+    UNICORN_WEB_TIMEOUT: 6000
+    UNICORN_WORKER_PROCESSES: 3
+    UNICORN_WEB_SERVER_PORT: '9393'
     RACK_ENV: development
 db:
   image: postgres:9.4.4

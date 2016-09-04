@@ -43,7 +43,7 @@ ensure_db(){
 bundle check > /dev/null 2>&1 || bundle install
 
 wait_for_db "db"
-ensure_db "db" "rest_api_template_development"
+ensure_db "db" "rest_api_template_db"
 
 if [ "$#" == 0 ]
 then

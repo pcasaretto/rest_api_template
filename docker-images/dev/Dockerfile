@@ -1,13 +1,18 @@
-FROM ruby:2.3.1
+FROM ruby:2.3.1-alpine
 
-# install primary dependencies
-RUN apt-get update \
-&& apt-get install -y --no-install-recommends \
+RUN apk --update add \
   postgresql-client \
-  apt-utils \
-  libicu-dev \
+  postgresql-dev \
   nodejs \
-&& rm -rf /var/lib/apt/lists/*
+  git \
+  build-base \
+  ruby-dev \
+  libc-dev \
+  linux-headers \
+  openssl-dev \
+  libxml2-dev \
+  libxslt-dev \
+&& rm -rf /var/cache/apk/*
 
 COPY Gemfile Gemfile
 
@@ -17,3 +22,5 @@ RUN rm Gemfile
 
 RUN mkdir -p /var/app
 WORKDIR /var/app
+
+CMD ["sh ./script/entrypoint.sh"]
