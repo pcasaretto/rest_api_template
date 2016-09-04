@@ -2,14 +2,11 @@
 
 command=$1
 
-#api_name="{{API_NAME_HERE}}"
-api_name="test_api"
+api_name="{{API_NAME_HERE}}"
 IMAGE_NAME=hugoluchessi/$api_name
 TAG="latest"
 app_prefix=$api_name"_"
 main_container_name="api"
-header_indicator="==========>"
-command_indicator=">"
 
 get_container_id(){
   app=$1
@@ -35,9 +32,9 @@ ensure_volumes(){
   ensure_volume $app_prefix"postgres"
 }
 
-ensure_uptodate_image(){
+ensure_uptodate_dev_image(){
   echo_command "Checking image updates..."
-  docker pull $IMAGE_NAME:$TAG
+  docker pull $IMAGE_NAME:$TAG-dev || echo_command "Image not on hub"
 }
 
 # Housekeeping methods
@@ -100,13 +97,13 @@ execute_command() {
 raise_infrastructure(){
   echo_command "Raising infrastructure"
   ensure_volumes
-  ensure_uptodate_image
-  docker-compose run -d --service-ports $main_container_name "tail -f /dev/null"
+  ensure_uptodate_dev_image
+  docker-compose run -d --service-ports $main_container_name "cat"
 }
 
 # Instrumentation methods
 echo_command(){
-  echo "$command_indicator $1"
+  echo "=> $1"
 }
 
 build_image(){
@@ -167,7 +164,7 @@ show_exec_help(){
   echo_command "    command       - command to be run inside the chosen container"
 }
 
-echo "$header_indicator Docker: $command"
+echo "==========> Docker: $command"
 case "$command" in
   install)
     install_engine
@@ -180,7 +177,7 @@ case "$command" in
     ;;
   start | s)
     echo_command "Starting web application"
-    execute_command "web" "/var/app/entrypoint.sh"
+    execute_command $main_container_name "/var/app/entrypoint.sh"
     exit 0
     ;;
   stop)
@@ -191,7 +188,7 @@ case "$command" in
     ;;
   console | c)
     echo_command "Starting up TTY Session on main container"
-    execute_command "web" "bash"
+    execute_command $main_container_name "bash"
     exit 0
     ;;
   exec | e)

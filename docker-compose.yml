@@ -1,5 +1,5 @@
 api:
-  image: resultadosdigitais/{{API_NAME_HERE}}:latest
+  image: resultadosdigitais/{{API_NAME_HERE}}:latest-dev
   command: "./entrypoint.sh"
   restart: always
   volumes:
