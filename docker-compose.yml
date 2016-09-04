@@ -1,5 +1,5 @@
 api:
-  image: hugoluchessi/rest_api_template:latest-dev
+  image: hugo1987br/rest_api_template:latest-dev
   command: "./entrypoint.sh"
   restart: always
   volumes:

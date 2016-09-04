@@ -26,4 +26,4 @@ deployment:
       - ./api-docker build prod latest
       #Please, do not change the first line below. Circle CI uses these environment variables for the sake of deployments
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push hugoluchessi/rest_api_template:latest
+      - docker push hugo1987br/rest_api_template:latest

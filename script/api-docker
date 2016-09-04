@@ -3,7 +3,7 @@
 command=$1
 
 api_name="rest_api_template"
-IMAGE_NAME=hugoluchessi/$api_name
+IMAGE_NAME=hugo1987br/$api_name
 TAG="latest"
 main_container_name="api"
 
@@ -102,7 +102,7 @@ raise_infrastructure(){
   echo_command "Raising infrastructure"
   ensure_volumes
   ensure_uptodate_dev_image
-  docker-compose run -d --service-ports $main_container_name "cat"
+  docker-compose run -d --service-ports $main_container_name "tail -f /dev/null"
 }
 
 # Instrumentation methods
@@ -126,7 +126,7 @@ build_image(){
     cp ./.dockerignore.dev ./.dockerignore
   fi
 
-  echo "Building '$env' image hugoluchessi/$api_name:$tag"
+  echo "Building '$env' image $IMAGE_NAME:$tag"
   docker build -t "$IMAGE_NAME:$tag" -f docker-images/$env/Dockerfile .
   rm ./.dockerignore
 }
