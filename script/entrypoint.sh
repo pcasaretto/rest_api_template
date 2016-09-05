@@ -35,9 +35,10 @@ ensure_db(){
     bundle exec rake create_db
   else
     echo_command "$1 already exists. Skiping database setup."
-    echo_command "Checking for pending migrations."
-    bundle exec rake migrate_db
   fi
+
+  echo_command "Checking for pending migrations."
+  bundle exec rake migrate_db
 }
 
 bundle check > /dev/null 2>&1 || bundle install

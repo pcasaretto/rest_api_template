@@ -192,7 +192,7 @@ case "$command" in
     ;;
   console | c)
     echo_command "Starting up TTY Session on main container"
-    execute_command $main_container_name "bash"
+    execute_command $main_container_name "sh"
     exit 0
     ;;
   exec | e)
