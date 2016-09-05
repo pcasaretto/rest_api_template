@@ -43,11 +43,10 @@ ensure_db(){
 
 bundle check > /dev/null 2>&1 || bundle install
 
-wait_for_db "db"
-ensure_db "db" "rest_api_template_db"
-
 if [ "$#" == 0 ]
 then
+  wait_for_db "db"
+  ensure_db "db" "rest_api_template_db"
   exec bundle exec unicorn -c ./config/unicorn.rb
 fi
 
