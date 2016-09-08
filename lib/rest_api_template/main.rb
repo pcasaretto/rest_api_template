@@ -23,8 +23,7 @@ module RestApiTemplate
       # Disable unused features to speed up
       disable :method_override
       disable :static
-
-      # Hide exception from users
+      disable :raise_errors
       set :show_exceptions => false
       set :dump_errors, false
 
@@ -41,6 +40,8 @@ module RestApiTemplate
       ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
       ActiveRecord::Base.logger = logger
 
+      use Rack::Deflater
+
       # Adding Middlewares
       # Use this middleware for request caching based on url, mainly useful for static content
       # use RestApiBase::Middlewares::UrlBased304, :cache_expiration_seconds => ENV['HTTP_CACHE_EXPIRATION']
@@ -53,11 +54,6 @@ module RestApiTemplate
 
       # Use this middleware to allow cross domain call on this api
       # use RestApiBase::Middlewares::AllowCrossDomain
-    end
-
-    error do
-      status 500
-      "Unknown error."
     end
   end
 end

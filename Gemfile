@@ -9,7 +9,7 @@ gem 'activerecord', '~> 4.2.0'
 gem 'rake', '~> 10.5.0'
 gem 'unicorn', '~> 5.0.1'
 gem 'buffered-logger', '~> 1.2.2'
-gem 'rest_api_base', '~> 0.0.5', :git => 'https://github.com/hugoluchessi/rest_api_base.git'
+gem 'rest_api_base', '~> 0.0.6', :git => 'https://github.com/hugoluchessi/rest_api_base.git'
 
 group :development, :test do
   gem 'foreman', '~> 0.78.0'
